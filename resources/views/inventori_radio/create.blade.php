@@ -35,6 +35,15 @@
                             <input type="number" class="form-control" id="waktu_pemakaian" name="waktu_pemakaian" value="{{ old('waktu_pemakaian') }}">
                         </div>
 
+                        <div class="form-group">
+                            <label for="waktu_pemakaian">Tempat:</label>
+                            <select class="form-control" id="id_kantor" name="id_kantor">
+                                @foreach ($kantor as $p)
+                                <option value="{{ $p->id }}">{{ $p->nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>

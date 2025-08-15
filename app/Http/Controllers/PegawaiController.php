@@ -64,6 +64,7 @@ class PegawaiController extends Controller
 
     public function update(Request $request, Pegawai $pegawai)
     {
+        // dd($pegawai);
         $request->validate([
             'nik' => 'required|string|max:12',
             'nama' => 'required|string|max:255',

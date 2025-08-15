@@ -27,6 +27,7 @@ use App\Models\Disposisi;
 use App\Models\Inventori;
 use App\Models\Kantor;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 use App\Models\SuratMasuk;
 use App\Models\SuratKeluar;
@@ -43,15 +44,15 @@ use App\Models\SuratKeluar;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    if(auth()->check()){
+        $kantor_count = Kantor::count();
+        $inventori_count = Inventori::count();
 
-Route::get('/welcome', function () {
-    return view('welcome');
+        return view('dashboard', compact('kantor_count', 'inventori_count'));
+    }else{
+        return redirect()->route('login');
+    }
 });
-
-// Route::resource('bidang',BidangController::class);
-// Route::resource('jenisbidang',JenisBidangController::class);
 
 Route::get('/dashboard', function () {
     $kantor_count = Kantor::count();

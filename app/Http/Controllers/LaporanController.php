@@ -9,7 +9,13 @@ class LaporanController extends Controller
 {
     public function index()
     {
-        $laporans = Laporan::all();
+        if(auth()->user()->role == "admin"){
+            $laporans = Laporan::all();
+        }else{
+            $laporans = Laporan::where('id_pegawai', auth()->user()->id)->get();
+        }
+
+        // dd($laporans[0]->detailaset->aset->nama);
 
         return view('laporan.index', compact('laporans'));
     }
@@ -21,18 +27,11 @@ class LaporanController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'nama_aset' => 'required|string|max:255',
-            'nomor_seri' => 'required|string|max:255',
-            'jenis' => 'required|string|max:255',
-            'pegawai' => 'required|string|max:255',
-            'masuk' => 'required|string|max:255',
-            'keluar' => 'required|string|max:255',
-            'keterangan' => 'required|string|max:255',
-            'waktu_pengerjaan' => 'required|string|max:255',
-        ]);
 
-        Laporan::create($request->all());
+        dd($request);
+        Laporan::create([
+
+        ]);
 
         return redirect('/laporan')->with('success', 'Laporan Aset created successfully.');
     }

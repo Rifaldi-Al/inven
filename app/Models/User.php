@@ -25,6 +25,7 @@ class User extends Authenticatable
         'email',
         'kontak',
         'nip',
+        'role',
         'password',
     ];
 
@@ -51,6 +52,16 @@ class User extends Authenticatable
     public function suratMasuks()
     {
         return $this->hasMany(SuratMasuk::class, 'created_by');
+    }
+
+    public function pegawai()
+    {
+        return $this->hasMany(Pegawai::class, 'id_pegawai');
+    }
+
+    public function maintenance()
+    {
+        return $this->hasMany(Maintenance::class, 'id_maintenance', 'id');
     }
 
     public function jabatans()

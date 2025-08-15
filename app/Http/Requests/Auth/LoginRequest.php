@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Auth\Events\Lockout;
@@ -27,7 +26,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username_or_nip' => ['required', 'string',],
+            'username' => ['required', 'string'],  // Changed from username_or_nip to username
             'password' => ['required', 'string'],
             'captcha' => ['required', 'captcha'],
         ];
@@ -40,32 +39,16 @@ class LoginRequest extends FormRequest
      */
     public function authenticate(): void
     {
-        // $this->ensureIsNotRateLimited();
-
-        // if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
-        //     RateLimiter::hit($this->throttleKey());
-
-        //     throw ValidationException::withMessages([
-        //         'email' => trans('auth.failed'),
-        //     ]);
-        // }
-
-        // RateLimiter::clear($this->throttleKey());
-
         $this->ensureIsNotRateLimited();
 
-        $credentials = $this->only('username_or_nip', 'password');
+        $credentials = $this->only('username', 'password');
 
-        // Attempt to authenticate with username
-        if (!Auth::attempt(['username' => $credentials['username_or_nip'], 'password' => $credentials['password']], $this->boolean('remember'))) {
-            // If authentication with username fails, attempt with nip
-            if (!Auth::attempt(['nip' => $credentials['username_or_nip'], 'password' => $credentials['password']], $this->boolean('remember'))) {
-                RateLimiter::hit($this->throttleKey());
+        if (!Auth::attempt(['username' => $credentials['username'], 'password' => $credentials['password']], $this->boolean('remember'))) {
+            RateLimiter::hit($this->throttleKey());
 
-                throw ValidationException::withMessages([
-                    'username_or_nip' => trans('auth.failed'),
-                ]);
-            }
+            throw ValidationException::withMessages([
+                'username' => trans('auth.failed'),  // Changed from username_or_nip to username
+            ]);
         }
 
         RateLimiter::clear($this->throttleKey());
@@ -87,7 +70,7 @@ class LoginRequest extends FormRequest
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'email' => trans('auth.throttle', [
+            'username' => trans('auth.throttle', [  // Changed from email to username
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ]),
@@ -99,6 +82,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->string('username')).'|'.$this->ip());  // Changed from email to username
     }
 }

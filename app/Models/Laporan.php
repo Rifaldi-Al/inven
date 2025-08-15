@@ -10,4 +10,8 @@ class Laporan extends Model
     use HasFactory;
     protected $table='laporan';
     protected $guarded = [];
+
+    public function detailaset() {
+        return $this->belongsTo(DetailAset::class, 'id_detail', 'id');
+    }
 }

@@ -14,4 +14,11 @@ class Kantor extends Model
     public function Kantor(){
         return $this->hasMany(Kantor::class, 'id_kantor', 'id');
     }
+
+    public function inventoris()
+    {
+        return $this->hasMany(Inventori::class, 'id_kantor', 'id');
+    }
+
+
 }

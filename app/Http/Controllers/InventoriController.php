@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Inventori;
+use App\Models\Kantor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -11,6 +12,7 @@ class InventoriController extends Controller
     public function index()
     {
         $inventoris = Inventori::all();
+        // dd($inventoris[1]->kantor);
 
         $year = Carbon::now()->format('Y');
         return view('inventori_radio.index', compact('inventoris', 'year'));
@@ -18,7 +20,8 @@ class InventoriController extends Controller
 
     public function create()
     {
-        return view('inventori_radio.create');
+        $kantor = Kantor::all();
+        return view('inventori_radio.create', compact('kantor'));
     }
 
     public function store(Request $request)
@@ -27,6 +30,7 @@ class InventoriController extends Controller
             'nomor_seri' => 'required|string|max:255',
             'tanggal_pemasangan' => 'required|date',
             'waktu_pemakaian' => 'required|string|max:255',
+            'id_kantor' => 'required|string|max:255',
         ]);
 
         $tanggal_pemasangan = Carbon::parse($request->tanggal_pemasangan);
@@ -39,6 +43,7 @@ class InventoriController extends Controller
             'nomor_seri' => $request->nomor_seri,
             'tanggal_pemasangan' => $request->tanggal_pemasangan,
             'waktu_pemakaian' => $request->waktu_pemakaian,
+            'id_kantor' => $request->id_kantor,
             'keterangan' => $keterangan,
         ]);
 

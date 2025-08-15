@@ -14,4 +14,9 @@ class Inventori extends Model
     public function LogRadio(){
         return $this->hasMany(Log::class, 'id_inventori_radio', 'id');
     }
+
+    public function kantor()
+    {
+        return $this->belongsTo(Kantor::class, 'id_kantor', 'id');
+    }
 }

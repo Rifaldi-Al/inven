@@ -37,6 +37,7 @@
                             <th class="">Username</th>
                             <th class="">NIP</th>
                             <th class="">Kontak</th>
+                            <th class="">Role</th>
                             <th class="">Email</th>
                             <th  class="small-column text-center">Aksi</th>
                         </tr>
@@ -52,6 +53,7 @@
                             <td >{{ $user->username }}</td>
                             <td >{{ $user->nip }}</td>
                             <td >{{ $user->kontak }}</td>
+                            <td >{{ $user->role }}</td>
                             <td >{{ $user->email }}</td>
                             <td class="text-center">
                                 <div class="dropdown">

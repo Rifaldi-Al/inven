@@ -25,7 +25,9 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h1 class="h3 mb-2 text-gray-800">Maintenance</h1>
+            @if(auth()->user()->role =="user")
             <a href="{{ route('maintenance.create') }}" class="btn btn-sm btn-primary shadow-sm"><i class="fa fa-plus-circle fa-sm text-white-50"></i> Create</a>
+            @endif
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -37,7 +39,11 @@
                             <th class="">Pelapor</th>
                             <th class="">Tanggal Laporan</th>
                             <th class="">Status</th>
+                            <th class="">Keterangan</th>
                             <th class="">Tanggal Perbaikan</th>
+                            @if(auth()->user()->role =="admin")
+                            <th class="">Aksi</th>
+                            @endif
                         </tr>
                     </thead>
                     <tfoot>
@@ -47,14 +53,18 @@
                         @foreach($datas as $data)
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
-                            <td >{{ $data->nomor_seri }}</td>
-                            <td >{{ $data->tanggal_pemasangan }}</td>
-                            <td >{{ $data->waktu_pemakaian }}</td>
-                            <td><a class="btn btn-sm btn-info" href="{{ route('maintenance.edit', $data->id) }}">Edit</a></td>
+                            <td >{{ $data->detailaset->aset->nama }}</td>
+                            <td >{{ $data->Pegawai->name }}</td>
+                            <td >{{ $data->tanggal_laporan }}</td>
+                            <td >{{ $data->status }}</td>
                             <td >{{ $data->keterangan }}</td>
+                            <td >{{ $data->tanggal_perbaikan }}</td>
+                            @if(auth()->user()->role =="admin")
+                            <td><a class="btn btn-sm btn-info" href="{{ route('maintenance.edit', $data->id) }}">Edit</a></td>
+                            @endif
                         </tr>
                         <!-- Delete Confirmation Modal -->
-                        <div class="modal fade" id="deleteConfirmationModal{{ $inventori->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="deleteConfirmationModal{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -68,7 +78,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                        <form action="{{ route('inventori.destroy', $inventori->id) }}" method="POST">
+                                        <form action="{{ route('inventori.destroy', $data->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger">Hapus</button>

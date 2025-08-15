@@ -34,8 +34,11 @@
                             <label for="email">Email:</label>
                             <input type="text" class="form-control" id="email" name="email" value="{{ old('email', $user->email) }}">
                             <label for="email">Role:</label>
-                            <input type="text" class="form-control" id="email" name="email" value="{{ old('role', $user->getRoleNames()) }}">
-
+                            <select name="role" class="form-control" id="role">
+                                <option value="{{ $user->role }}">{{ $user->role }}</option>
+                                <option value="admin">Admin</option>
+                                <option value="user">User</option>
+                            </select>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Update</button>

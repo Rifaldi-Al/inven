@@ -10,25 +10,25 @@
             <a href="{{ route('dashboard')}}"><i class="icon-home"></i><span class="menu-title">Dashboard</span></a>
         </li>
 
-        <!-- Data Pegawai -->
-        <li class="nav-item">
-            <a href="{{ route('pegawai.index') }}"><i class="icon-people"></i><span class="menu-title">Data Pegawai</span></a>
-        </li>
+        @if(auth()->user()->role == "admin")
+            <li class="nav-item">
+                <a href="{{ route('pegawai.index') }}"><i class="icon-people"></i><span class="menu-title">Data Pegawai</span></a>
+            </li>
 
-        <!-- Kategori Aset -->
-        <li class="nav-item">
-            <a href="{{ route('kategori.index') }}"><i class="icon-layers"></i><span class="menu-title">Kategori Aset</span></a>
-        </li>
+            <!-- Kategori Aset -->
+            <li class="nav-item">
+                <a href="{{ route('kategori.index') }}"><i class="icon-layers"></i><span class="menu-title">Kategori Aset</span></a>
+            </li>
+            <!-- Manajemen Aset -->
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="icon-briefcase"></i><span class="menu-title">Aset Manajemen</span></a>
+                <ul class="menu-content">
+                    <li><a class="menu-item" href="{{ route('aset.index') }}"> Manajemen Hardware</a></li>
+                    <li><a class="menu-item" href="{{ route('inventori.index') }}">Manajemen Jaringan</a></li>
+                </ul>
+            </li>
 
-        <!-- Manajemen Aset -->
-        <li class="nav-item">
-            <a class="nav-link" href="#"><i class="icon-briefcase"></i><span class="menu-title">Aset Manajemen</span></a>
-            <ul class="menu-content">
-                <li><a class="menu-item" href="{{ route('aset.index') }}"> Manajemen Hardware</a></li>
-                <li><a class="menu-item" href="{{ route('inventori.index') }}">Manajemen Jaringan</a></li>
-            </ul>
-        </li>
-
+        @endif
         <!-- Maintenance -->
         <li class="nav-item">
             <a href="{{ route('maintenance.index') }}">
@@ -45,12 +45,20 @@
         </li>
 
         <!-- Laporan -->
-<li class="nav-item">
-    <a href="{{ route('laporan.index') }}">
-        <i class="icon-chart"></i> <!-- Ikon Grafik Garis -->
-        <span class="menu-title">Laporan</span>
-    </a>
-</li>
+            <li class="nav-item">
+                <a href="{{ route('laporan.index') }}">
+                    <i class="icon-chart"></i> <!-- Ikon Grafik Garis -->
+                    <span class="menu-title">Laporan</span>
+                </a>
+            </li>
 
+        @if(auth()->user()->role == "admin")
+            <li class="nav-item">
+                <a href="{{ route('user.index') }}">
+                    <i class="icon-user"></i> <!-- Ikon Grafik Garis -->
+                    <span class="menu-title">Daftar User</span>
+                </a>
+            </li>
+        @endif
     </ul>
 </div>

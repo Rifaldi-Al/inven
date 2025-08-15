@@ -34,6 +34,7 @@
                         <tr>
                             <th class="small-column text-center">NO</th>
                             <th class="">Nomor Seri</th>
+                            <th class="">Penempatan</th>
                             <th class="">Tanggal Pemasangan</th>
                             <th class="">Waktu Pemakaian</th>
                             <th class="">Log Pengganti</th>
@@ -49,6 +50,7 @@
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
                             <td >{{ $inventori->nomor_seri }}</td>
+                            <td >{{ $inventori->kantor->nama ?? "Gudang" }}</td>
                             <td >{{ $inventori->tanggal_pemasangan }}</td>
                             <td >{{ $inventori->waktu_pemakaian }}</td>
                             <td><a href="{{ route('log.index', ['nomor_seri' => $inventori->nomor_seri]) }}) " class="btn btn-sm btn-info"></i>Info</a></td>

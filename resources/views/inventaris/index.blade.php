@@ -28,8 +28,10 @@
     <!-- Page Heading -->
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
-            <h1 class="h3 mb-2 text-gray-800">Daftar Aset Hardware</h1>
+            @if(auth()->user()->role == "admin")
+            <h1 class="h3 mb-2 text-gray-800">Daftar Inventaris</h1>
             <a href="{{ route('aset.create') }}" class="btn btn-sm btn-primary shadow-sm"><i class="fa fa-plus-circle fa-sm text-white-50"></i> Create</a>
+            @endif
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -37,36 +39,42 @@
                     <thead>
                         <tr>
                             <th class="small-column text-center">NO</th>
+                            @if(auth()->user()->role == "admin")
                             <th class="">Pemilik</th>
+                            @endif
                             <th class="">Nama</th>
                             <th class="">Merk</th>
                             <th class="">Spesifikasi</th>
                             <th class="">Nomor Seri</th>
                             <th class="">Tanggal Pembelian</th>
                             <th class="">Kategori</th>
+                            @if(auth()->user()->role == "admin")
                             <th class="">Penempatan</th>
+                            @endif
                             <th class="">Gambar</th>
-                            <th  class="small-column text-center">Aksi</th>
+                            {{-- @if(auth()->user()->role == "user")
+                                <th  class="small-column text-center">Aksi</th>
+                            @endif --}}
                         </tr>
                     </thead>
                     <tfoot>
 
                     </tfoot>
                     <tbody>
-                        @foreach($asets as $aset)
+                        @foreach($inventaris as $aset)
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
+                            @if(auth()->user()->role == "admin")
                             <td>{{ $aset->pegawai->nama ?? 'Tidak Ada Inventaris' }}</td>
+                            @endif
                             <td>{{ $aset->aset->nama ?? 'N/A' }}</td>
                             <td>{{ $aset->aset->merk ?? 'N/A' }}</td>
                             <td>{{ $aset->aset->spesifikasi ?? 'N/A' }}</td>
                             <td>{{ $aset->nomor_seri }}</td>
                             <td>{{ $aset->tanggal_beli ?? 'N/A' }}</td> <!-- Fixed field name to match your DB -->
                             <td>{{ $aset->aset->kategori->nama ?? 'N/A' }}</td>
-                            @if($aset->id_pegawai == Null)
-                                <td>{{ $aset->status }}</td>
-                            @else
-                                <td>{{ $aset->Pegawai->kantor->nama }}</td>
+                            @if(auth()->user()->role == "admin")
+                            <td>{{ $aset->Pegawai->kantor->nama }}</td>
                             @endif
                             <td style="width: 80px; height: 80px; padding: 4px;">
                                 <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid #eee; border-radius: 4px;">
@@ -75,18 +83,12 @@
                                         style="object-fit: contain; max-width: 100%; max-height: 100%;">
                                 </div>
                             </td>
+                            {{-- @if(auth()->user()->role == "user")
                             <td class="text-center">
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Aksi
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item edit-link" href="{{ route('aset.edit', $aset->id) }}">Edit</a>
-                                        <a class="dropdown-item inventaris-link" href="{{ route('aset.inventaris', $aset->id) }}">Inventaris</a>
-                                        <button type="button" class="dropdown-item delete-link" data-toggle="modal" data-target="#deleteConfirmationModal{{ $aset->id }}">Delete</button>
-                                    </div>
+                                        <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteConfirmationModal{{ $aset->id }}">Delete</button>
                                 </div>
                             </td>
+                            @endif --}}
                         </tr>
                         <!-- Delete Confirmation Modal -->
                         <div class="modal fade" id="deleteConfirmationModal{{ $aset->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
@@ -105,7 +107,7 @@
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                                         <form action="{{ route('aset.destroy', $aset->id) }}" method="POST">
                                             @csrf
-                                            @method('DELETE')
+                                            @method('POST')
                                             <button type="submit" class="btn btn-danger">Hapus</button>
                                         </form>
                                     </div>

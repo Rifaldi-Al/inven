@@ -36,7 +36,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header text-center">Jumlah Radio</div>
-                
+
                 <div class="card-body text-center">
                     <h2>{{ \App\Models\Inventori::count() }}</h2>
                 </div>
@@ -46,7 +46,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header text-center">Aset Pegawai</div>
-                
+
                 <div class="card-body text-center">
                     <h2>{{ \App\Models\Aset::count() }}</h2>
                 </div>

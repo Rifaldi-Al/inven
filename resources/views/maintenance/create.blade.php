@@ -20,46 +20,23 @@
                     <form method="POST" action="{{ route('maintenance.store') }}">
                         @csrf
                         <div class="form-group">
-                            <label for="kode">Kode</label>
-                            <input type="text" class="form-control" id="id_detail" name="id_detail" value="{{ old('id_detail') }}">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="nama">Nama:</label>
-                            <input type="text" class="form-control" id="nama" name="nama" value="{{ old('nama') }}">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Email:</label>
-                            <input type="text" class="form-control" id="email" name="email" value="{{ old('email') }}">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="departemen">Deaprtemen:</label>
-                            <input type="text" class="form-control" id="departemen" name="departemen" value="{{ old('departemen') }}">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="jabatan">Jabatan:</label>
-                            <input type="text" class="form-control" id="jabatan" name="jabatan" value="{{ old('jabatan') }}">
-                        </div>
-
-                        <div class="form-group" id="pegawai-field">
-                            <label for="id_kantor">Area Kerja:</label>
-                            <select name="id_kantor" class="form-control" required>
-                                @foreach($kantors as $kantor)
-                                    <option value="{{ $kantor->id }}" {{ $kantor->nama == $selectedKantor ? 'selected' : '' }}>
-                                        {{ $kantor->nama }}
-                                    </option>
+                            <label for="kode">Nama Alat</label>
+                            <select  class="form-control" id="id_detail" name="id_detail">
+                                @foreach ($aset as $a)
+                                <option value="{{ $a->id }}">{{ $a->aset->nama }} - {{ $a->nomor_seri }}</option>
                                 @endforeach
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label for="umh">UMH:</label>
-                            <input type="text" class="form-control" id="umh" name="umh" value="{{ old('umh') }}">
+                            <label for="nama">Tanggal Perbaikan</label>
+                            <input type="date" class="form-control" id="tanggal_perbaikan" name="tanggal_perbaikan" value="{{ old('tanggal_perbaikan') }}">
                         </div>
 
+                        <div class="form-group">
+                            <label for="nama">Keterangan</label>
+                            <textarea  id="keterangan" name="keterangan" value="{{ old('keterangan') }}" class="form-control"></textarea>
+                        </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>

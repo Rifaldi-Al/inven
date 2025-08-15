@@ -26,15 +26,20 @@
                     <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link"
                             href="#" data-toggle="dropdown"><span class="avatar avatar-online"><img
                                     src="{{ asset('asset_dashboard/images/portrait/small/avatar-s-1.png') }}"
-                                    alt="avatar"><i></i></span><span class="user-name">Administrator</span></a>
+                                    alt="avatar"><i></i></span><span class="user-name">{{ auth()->user()->username }}</span></a>
                         <div class="dropdown-menu dropdown-menu-right">
                                 {{-- <a class="dropdown-item" href="user-profile.html"><i class="ft-user"></i> Edit Profile</a>
                                 <a class="dropdown-item" href="email-application.html"><i class="ft-mail"></i> MyInbox</a>
                                 <a class="dropdown-item" href="user-cards.html"><i class="ft-check-square"></i> Task</a>
                                 <a class="dropdown-item" href="chat-application.html"><i class="ft-message-square"></i> Chats</a>
                             <div class="dropdown-divider"></div> --}}
-                                <a class="dropdown-item" href="login-with-bg-image.html"><i class="ft-power"></i> Logout</a>
-                        </div>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item">
+                                    <i class="ft-power"></i> Logout
+                                </button>
+                            </form>
+                       </div>
                     </li>
                 </ul>
             </div>

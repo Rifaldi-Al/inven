@@ -15,10 +15,15 @@ class Maintenance extends Model
         'id_detail',
         'tanggal_laporan',
         'status',
+        'keterangan',
+        'tanggal_perbaikan',
         'id_pegawai',
     ];
 
     public function detailaset() {
         return $this->belongsTo(DetailAset::class, 'id_detail', 'id');
+    }
+    public function Pegawai() {
+        return $this->belongsTo(User::class, 'id_pegawai', 'id');
     }
 }

@@ -25,7 +25,9 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h1 class="h3 mb-2 text-gray-800">Laporan</h1>
+            @if(auth()->user()->role == "admin")
             <a href="{{ route('laporan.create') }}" class="btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus-circle fa-sm text-white-50"></i> Create</a>
+            @endif
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -41,7 +43,6 @@
                             <th class="">Tanggal Aset Keluar</th>
                             <th class="">Keterangan Aset</th>
                             <th class="">Waktu Perbaikan</th>
-                            <th  class="small-column text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -51,25 +52,14 @@
                         @foreach($laporans as $laporan)
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
-                            <td >{{ $laporan->nomor_seri }}</td>
-                            <td >{{ $laporan->nama_aset }}</td>
-                            <td >{{ $laporan->jenis}}</td>
-                            <td >{{ $laporan->pegawai}}</td>
+                            <td >{{ $laporan->detailaset->nomor_seri }}</td>
+                            <td >{{ $laporan->detailaset->aset->nama }}</td>
+                            <td >Hardware</td>
+                            <td >{{ $laporan->detailaset->pegawai->nama}}</td>
                             <td >{{ $laporan->masuk}} </td>
                             <td >{{ $laporan->keluar}}</td>
                             <td >{{ $laporan->keterangan}}</td>
                             <td >{{ $laporan->waktu_pengerjaan }}</td>
-                            <td class="text-center">
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Aksi
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item edit-link" href="{{ route('laporan.edit', $laporan->id) }}">Edit</a>
-                                        <button type="button" class="dropdown-item delete-link" data-toggle="modal" data-target="#deleteConfirmationModal{{ $laporan->id }}">Delete</button>
-                                    </div>
-                                </div>
-                            </td>
                         </tr>
                         <!-- Delete Confirmation Modal -->
                         <div class="modal fade" id="deleteConfirmationModal{{ $laporan->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">

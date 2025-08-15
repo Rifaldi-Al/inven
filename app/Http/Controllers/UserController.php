@@ -21,9 +21,9 @@ class UserController extends Controller
     }
     public function create()
     {
-        $roles = Roles::all();
-        $jabatans = Jabatan::all();
-        return view('user.create', compact('roles', 'jabatans'));
+        // $roles = Roles::all();
+        // $jabatans = Jabatan::all();
+        return view('user.create');
     }
 
     public function store(Request $request)
@@ -58,6 +58,7 @@ class UserController extends Controller
             'kontak' => 'required|integer',
             'email' => 'required|string|max:255',
         ]);
+        // dd($request);
 
         $user->update($request->all());
 
